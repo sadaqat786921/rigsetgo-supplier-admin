@@ -9,6 +9,7 @@ import { useStore } from '../store/store';
 import { ConfirmDialog, Modal, useOutside } from './ui';
 import { TODAY } from '../data/seed';
 import { eqName } from '../data/utils';
+import { img } from '../data/images';
 
 const NAV = [
   { to: '/', label: 'Dashboard', icon: IconLayoutGrid, end: true },
@@ -100,7 +101,7 @@ export default function Layout() {
   return (
     <div className="app">
       <aside className="sidebar" aria-label="Main menu">
-        <img className="logo" src="images/logo.svg" alt="RigSetGo – Construction Equipment Rentals" />
+        <img className="logo" src={img('images/logo.svg')} alt="RigSetGo – Construction Equipment Rentals" />
         <div className="profile">
           <div className="avatar lg">MR</div>
           <div>
@@ -153,7 +154,7 @@ export default function Layout() {
           </button>
         </div>
         <div className="side-photo">
-          <img src="images/excavator-sky.jpg" alt="Excavator on site" />
+          <img src={img('images/excavator-sky.jpg')} alt="Excavator on site" />
         </div>
       </aside>
 
@@ -356,7 +357,7 @@ export default function Layout() {
         <div className="backdrop">
           <div className="modal tour" role="dialog" aria-label="Welcome tour">
             <div className="hero-photo">
-              <img src={TOUR[slide].photo} alt="" />
+              <img src={img(TOUR[slide].photo)} alt="" />
             </div>
             <div className="modal-body" style={{ alignItems: 'center' }}>
               <div className="tiny strong" style={{ color: 'var(--navy)' }}>

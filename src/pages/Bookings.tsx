@@ -7,6 +7,7 @@ import type { Booking } from '../data/types';
 import { TODAY, FEE_RATE } from '../data/seed';
 import { bookingTotal, eqName, fmtDate, fmtStamp, money, platformFee, rentalDays, shortDate, supplierShare, unitConflict } from '../data/utils';
 import { TicketModal } from './Deliveries';
+import { img } from '../data/images';
 
 type BTab = 'All' | 'Needs action' | 'Upcoming' | 'Active' | 'Completed' | 'Cancelled';
 
@@ -196,7 +197,7 @@ export function BookingDetail() {
           <section className="card">
             <div className="row between top">
               <div className="row gap-16">
-                <img className="thumb" src={eq.photo} alt="" style={{ width: 96, height: 72 }} />
+                <img className="thumb" src={img(eq.photo)} alt="" style={{ width: 96, height: 72 }} />
                 <div>
                   <div className="row gap-8">
                     <Badge>{b.status}</Badge>

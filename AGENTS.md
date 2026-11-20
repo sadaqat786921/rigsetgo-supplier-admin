@@ -18,7 +18,7 @@ A complete, clickable working design of the **Supplier Admin** portal for RigSet
 - React 19 + Vite + TypeScript, `HashRouter`. Entry: `index.html` → `src/main.tsx` → `src/App.tsx`.
 - Icons: `@tabler/icons-react`. Font: `@fontsource/inter` (400/500/600/700). One font everywhere.
 - Plain CSS design tokens and all component styles in `src/styles/app.css` (no Tailwind).
-- Images in `public/images`, referenced with relative paths (`images/excavator-sunset.jpg`).
+- Images are built into the code in `src/data/images.ts` (so they load for every viewer in Figma Make). Sample data keeps paths like `images/excavator-sunset.jpg`; every `<img>` uses `img(path)` to get the built-in image. Originals stay in `public/images`.
 - `npm install` then `npm run dev`. `npm run build` type-checks and builds.
 
 ## Structure

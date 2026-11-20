@@ -8,6 +8,7 @@ import { CATEGORIES, PHOTOS, REQUIRED_DOCS, TODAY } from '../data/seed';
 import { blockingDocs, fmtDate, money, overlaps, shortDate, LIVE_STATUSES } from '../data/utils';
 import { PricingModal } from './Pricing';
 import { UploadDocModal } from './Compliance';
+import { img } from '../data/images';
 
 export function listingIssues(s: AppState, e: Equipment): string[] {
   const out: string[] = [];
@@ -91,7 +92,7 @@ export function EquipmentList() {
                     <tr key={e.id} className="click" onClick={() => nav(`/equipment/${e.id}`)}>
                       <td>
                         <div className="row">
-                          <img className="thumb" src={e.photo} alt="" />
+                          <img className="thumb" src={img(e.photo)} alt="" />
                           <div>
                             <div className="strong">{e.name}</div>
                             <div className="tiny muted">
@@ -182,7 +183,7 @@ export function EquipmentDetail() {
       )}
       <section className="card" style={{ flexDirection: 'row', gap: 24 }}>
         <div className="hero-photo" style={{ width: 360, flex: 'none', height: 240 }}>
-          <img src={e.photo} alt={e.name} />
+          <img src={img(e.photo)} alt={e.name} />
         </div>
         <div className="col gap-16 grow">
           <div className="row between top">
@@ -749,7 +750,7 @@ export function EquipmentWizard() {
               <div className="photo-pick">
                 {PHOTOS.map((ph) => (
                   <button key={ph} className={e.photo === ph ? 'on' : ''} onClick={() => setE({ ...e, photo: ph })} aria-label="Choose photo">
-                    <img src={ph} alt="" />
+                    <img src={img(ph)} alt="" />
                   </button>
                 ))}
               </div>
@@ -955,7 +956,7 @@ export function EquipmentWizard() {
               </div>
             )}
             <div className="row gap-16">
-              <img className="thumb" src={e.photo} alt="" style={{ width: 120, height: 84 }} />
+              <img className="thumb" src={img(e.photo)} alt="" style={{ width: 120, height: 84 }} />
               <div>
                 <div className="strong" style={{ fontSize: 18 }}>{e.name || 'Untitled'}</div>
                 <div className="muted small">

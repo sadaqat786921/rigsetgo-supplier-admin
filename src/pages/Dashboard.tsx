@@ -6,6 +6,7 @@ import { Avatar, Badge, Empty, Pills, Progress, Stars } from '../components/ui';
 import { Bars, Donut, LineChart, MiniLine, RouteMap } from '../components/charts';
 import { TODAY } from '../data/seed';
 import { addDays, bookingTotal, eqName, fleetStats, fmtDate, fmtStamp, money, monthEarnings, overlaps, rentalDays, shortDate, LIVE_STATUSES, daysUntil } from '../data/utils';
+import { img } from '../data/images';
 
 export default function Dashboard() {
   const { state } = useStore();
@@ -231,7 +232,7 @@ export default function Dashboard() {
             </button>
           </div>
           <div className="hero-photo" style={{ height: 180 }}>
-            <img src={eqPhoto} alt="CAT 320 excavator" />
+            <img src={img(eqPhoto)} alt="CAT 320 excavator" />
           </div>
           <div>
             <div className="big-num">
@@ -367,7 +368,7 @@ export default function Dashboard() {
       </div>
 
       <section className="banner-cta">
-        <img src="images/excavator-banner.jpg" alt="" />
+        <img src={img('images/excavator-banner.jpg')} alt="" />
         <div className="grow">
           <div style={{ fontSize: 20, fontWeight: 600 }}>List more equipment, earn more</div>
           <div style={{ color: '#c9d7ea' }}>Contractors in Atlanta are searching for excavators and loaders this week.</div>

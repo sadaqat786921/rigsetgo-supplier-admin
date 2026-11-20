@@ -4,6 +4,7 @@ import { useStore } from '../store/store';
 import { Field, Stars } from '../components/ui';
 import type { Business } from '../data/types';
 import { fmtDate } from '../data/utils';
+import { img } from '../data/images';
 
 const SENSITIVE: { key: keyof Business; label: string }[] = [
   { key: 'legalName', label: 'Business name' },
@@ -90,7 +91,7 @@ export default function Storefront() {
       <div className="grid g2">
         <section className="card flat">
           <div className="hero-photo" style={{ borderRadius: 0, height: 180 }}>
-            <img src="images/wheel-loaders.jpg" alt="" />
+            <img src={img('images/wheel-loaders.jpg')} alt="" />
           </div>
           <div className="col gap-16" style={{ padding: 24 }}>
             <div className="row">
@@ -117,7 +118,7 @@ export default function Storefront() {
             <div className="row wrap gap-8">
               {published.slice(0, 4).map((e) => (
                 <div key={e.id} style={{ width: 'calc(50% - 4px)' }} className="row gap-8">
-                  <img className="thumb" src={e.photo} alt="" style={{ width: 56, height: 40 }} />
+                  <img className="thumb" src={img(e.photo)} alt="" style={{ width: 56, height: 40 }} />
                   <span className="tiny strong">{e.name}</span>
                 </div>
               ))}

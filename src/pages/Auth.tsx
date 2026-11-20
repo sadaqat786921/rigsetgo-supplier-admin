@@ -8,6 +8,7 @@ import {
 import { useStore } from '../store/store';
 import { DEMO_CODE, Field, Modal } from '../components/ui';
 import { emptyApplication } from '../data/seed';
+import { img } from '../data/images';
 
 const BRAND = [
   { photo: 'images/excavator-sunset.jpg', head: 'Rent out your equipment to Atlanta’s contractors', sub: 'List your machines, get booked online and get paid on time. All in one place.' },
@@ -26,9 +27,9 @@ function Shell({ brand, top, children, dots }: { brand: number; top: ReactNode; 
   return (
     <div className="auth">
       <aside className="auth-brand">
-        <img className="logo" src="images/logo-white.svg" alt="RigSetGo" />
+        <img className="logo" src={img('images/logo-white.svg')} alt="RigSetGo" />
         <div className="auth-photo">
-          <img src={b.photo} alt="Construction equipment on a job site" />
+          <img src={img(b.photo)} alt="Construction equipment on a job site" />
         </div>
         <div>
           <h2>{b.head}</h2>

@@ -5,6 +5,7 @@ import { useStore } from '../store/store';
 import { Badge, Field, Modal, Toggle } from '../components/ui';
 import type { Equipment, Pricing } from '../data/types';
 import { money } from '../data/utils';
+import { img } from '../data/images';
 
 export function PricingModal({ eq, onClose }: { eq: Equipment; onClose: () => void }) {
   const { update } = useStore();
@@ -121,7 +122,7 @@ export default function PricingPage() {
                 <tr key={e.id}>
                   <td>
                     <button className="row" style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', textAlign: 'left' }} onClick={() => nav(`/equipment/${e.id}`)}>
-                      <img className="thumb" src={e.photo} alt="" />
+                      <img className="thumb" src={img(e.photo)} alt="" />
                       <div>
                         <div className="strong">{e.name}</div>
                         <div className="tiny muted">{e.units.length} units</div>

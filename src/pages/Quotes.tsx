@@ -6,6 +6,7 @@ import { Avatar, Badge, Empty, Field, Modal, ReasonDialog, Tabs } from '../compo
 import type { Pricing, QuoteLine, QuoteRequest } from '../data/types';
 import { TODAY } from '../data/seed';
 import { addDays, blockingDocs, fmtDate, fmtStamp, money, rentalDays, shortDate, unitConflict } from '../data/utils';
+import { img } from '../data/images';
 
 export function priceFor(p: Pricing, days: number) {
   const w4 = Math.floor(days / 28);
@@ -239,7 +240,7 @@ export function QuoteDetail() {
           <section className="card">
             <h3>Your matching equipment</h3>
             <div className="row">
-              <img className="thumb" src={eq.photo} alt="" />
+              <img className="thumb" src={img(eq.photo)} alt="" />
               <div>
                 <button className="link" style={{ fontSize: 15, fontWeight: 600 }} onClick={() => nav(`/equipment/${eq.id}`)}>
                   {eq.name}
