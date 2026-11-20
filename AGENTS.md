@@ -16,7 +16,7 @@ A complete, clickable working design of the **Supplier Admin** portal for RigSet
 ## Tech
 
 - React 19 + Vite + TypeScript, `HashRouter`. Entry: `index.html` → `src/main.tsx` → `src/App.tsx`.
-- Icons: `@tabler/icons-react`. Font: `@fontsource/inter` (400/500/600/700). One font everywhere..
+- Icons: `@tabler/icons-react`. Font: `@fontsource/inter` (400/500/600/700). One font everywhere.
 - Plain CSS design tokens and all component styles in `src/styles/app.css` (no Tailwind).
 - Images in `public/images`, referenced with relative paths (`images/excavator-sunset.jpg`).
 - `npm install` then `npm run dev`. `npm run build` type-checks and builds.
