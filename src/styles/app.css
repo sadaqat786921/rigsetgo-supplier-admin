@@ -25,7 +25,7 @@
   --radius-lg: 22px;
   --shadow: 0 8px 24px rgba(0, 33, 77, 0.08);
   --shadow-lg: 0 24px 60px rgba(0, 33, 77, 0.18);
-  --font: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
 }
 
 * { box-sizing: border-box; }

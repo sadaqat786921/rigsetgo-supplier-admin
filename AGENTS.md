@@ -16,7 +16,7 @@ A complete, clickable working design of the **Supplier Admin** portal for RigSet
 ## Tech
 
 - React 19 + Vite + TypeScript, `HashRouter`. Entry: `index.html` → `src/main.tsx` → `src/App.tsx`.
-- Icons: `@tabler/icons-react`. Font: `@fontsource/plus-jakarta-sans` (400/500/600/700).
+- Icons: `@tabler/icons-react`. Font: `@fontsource/inter` (400/500/600/700). One font everywhere..
 - Plain CSS design tokens and all component styles in `src/styles/app.css` (no Tailwind).
 - Images in `public/images`, referenced with relative paths (`images/excavator-sunset.jpg`).
 - `npm install` then `npm run dev`. `npm run build` type-checks and builds.
@@ -56,7 +56,7 @@ src/
 - Primary navy `#003778`, white surfaces, page background `#F3F6FA`, lines `#E3E9F1`.
 - Orange `#F7941D` (from the logo) is an accent only: badges, alerts, stars, highlights.
 - Status colours: green `#12A150` (good / done), orange (waiting / needs action), red `#D92D20` (problem / blocked).
-- Plus Jakarta Sans. Body 15 px, titles 22–34 px. Calm, plain wording for users aged 60+.
+- Inter only (one font for the whole portal). Body 15 px, titles 22–34 px. Calm, plain wording for users aged 60+.
 - Cards 22 px radius, buttons 12 px radius. Real equipment photos from the approved Figma file.
 
 ## Routes and every flow
