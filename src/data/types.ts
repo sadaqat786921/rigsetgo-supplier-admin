@@ -28,6 +28,8 @@ export interface Equipment {
   model: string;
   year: number;
   photo: string;
+  /** All photos, main photo first. Older sample data only has `photo`. */
+  photos?: string[];
   description: string;
   weight: string;
   capacity: string;

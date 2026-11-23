@@ -9,12 +9,16 @@ import { blockingDocs, fmtDate, money, overlaps, shortDate, LIVE_STATUSES } from
 import { PricingModal } from './Pricing';
 import { UploadDocModal } from './Compliance';
 import { img } from '../data/images';
+import { PhotoManager } from '../components/PhotoManager';
+
+/** All photos of a listing, main photo first. */
+export const photosOf = (e: Equipment): string[] => (e.photos?.length ? e.photos : e.photo ? [e.photo] : []);
 
 export function listingIssues(s: AppState, e: Equipment): string[] {
   const out: string[] = [];
   if (!e.name.trim() || !e.make.trim() || !e.model.trim()) out.push('Add the make, model and name');
   if (e.description.trim().length < 20) out.push('Write a short description (at least 20 characters)');
-  if (!e.photo) out.push('Choose a photo');
+  if (!photosOf(e).length) out.push('Upload at least one photo');
   if (!e.units.length) out.push('Add at least one physical unit with its serial number');
   if (!e.pricing) out.push('Set daily, weekly and 4-week prices');
   (REQUIRED_DOCS[e.category] ?? []).forEach((d) => {
@@ -132,9 +136,10 @@ export function EquipmentDetail() {
   const nav = useNavigate();
   const e = state.equipment.find((x) => x.id === id);
   const [tab, setTab] = useState<'Overview' | 'Units' | 'Pricing' | 'Documents' | 'Bookings'>('Overview');
-  const [modal, setModal] = useState<'' | 'status' | 'pricing' | 'unit' | 'publish' | 'delete' | 'retire'>('');
+  const [modal, setModal] = useState<'' | 'status' | 'pricing' | 'unit' | 'publish' | 'delete' | 'retire' | 'photos'>('');
   const [unitEdit, setUnitEdit] = useState<Unit | null>(null);
   const [removeUnit, setRemoveUnit] = useState<Unit | null>(null);
+  const [shown, setShown] = useState(0);
   const [upload, setUpload] = useState<string | null>(null);
   const [newStatus, setNewStatus] = useState<EquipmentStatus>('Published');
   if (!e) return <Empty title="Equipment not found" action={<Link to="/equipment" className="btn btn-secondary">Back to equipment</Link>} />;
@@ -182,8 +187,26 @@ export function EquipmentDetail() {
         </div>
       )}
       <section className="card" style={{ flexDirection: 'row', gap: 24 }}>
-        <div className="hero-photo" style={{ width: 360, flex: 'none', height: 240 }}>
-          <img src={img(e.photo)} alt={e.name} />
+        <div style={{ width: 360, flex: 'none' }}>
+          <div className="hero-photo" style={{ height: 240 }}>
+            <img src={img(photosOf(e)[shown] ?? e.photo)} alt={e.name} />
+          </div>
+          <div className="thumbs">
+            {photosOf(e).length > 1 &&
+              photosOf(e).map((ph, i) => (
+                <button key={`${i}-${ph.slice(-24)}`} className={i === shown ? 'on' : ''} onClick={() => setShown(i)} aria-label={`Show photo ${i + 1}`}>
+                  <img src={img(ph)} alt="" />
+                </button>
+              ))}
+          </div>
+          <div className="row between" style={{ marginTop: 10 }}>
+            <span className="muted small">
+              {photosOf(e).length} photo{photosOf(e).length === 1 ? '' : 's'}
+            </span>
+            <button className="btn btn-secondary btn-sm" onClick={() => setModal('photos')}>
+              <IconUpload size={16} /> Upload photos
+            </button>
+          </div>
         </div>
         <div className="col gap-16 grow">
           <div className="row between top">
@@ -532,6 +555,7 @@ export function EquipmentDetail() {
         />
       )}
       {modal === 'pricing' && <PricingModal eq={e} onClose={() => setModal('')} />}
+      {modal === 'photos' && <PhotosModal eq={e} onClose={() => { setModal(''); setShown(0); }} />}
       {(modal === 'unit' || unitEdit) && (
         <UnitModal
           unit={unitEdit}
@@ -643,7 +667,7 @@ export function EquipmentWizard() {
     () =>
       existing ??
       {
-        id: newId, name: '', category: 'Excavators', make: '', model: '', year: 2024, photo: PHOTOS[0], description: '', weight: '', capacity: '', fuel: 'Diesel', transport: '',
+        id: newId, name: '', category: 'Excavators', make: '', model: '', year: 2024, photo: '', photos: [], description: '', weight: '', capacity: '', fuel: 'Diesel', transport: '',
         operatorRequired: false, attachments: [], prohibitedUses: '', status: 'Draft', bookingMode: 'instant', pricing: null, units: [],
       },
   );
@@ -746,14 +770,8 @@ export function EquipmentWizard() {
                 <input className="input" type="number" value={e.year} onChange={(x) => setE({ ...e, year: Number(x.target.value) })} />
               </Field>
             </div>
-            <Field label="Photo" hint="Choose the photo contractors will see first.">
-              <div className="photo-pick">
-                {PHOTOS.map((ph) => (
-                  <button key={ph} className={e.photo === ph ? 'on' : ''} onClick={() => setE({ ...e, photo: ph })} aria-label="Choose photo">
-                    <img src={img(ph)} alt="" />
-                  </button>
-                ))}
-              </div>
+            <Field label="Photos" hint="Add clear photos from the front, side and back. The main photo is the one contractors see first.">
+              <PhotoManager photos={photosOf(e)} onChange={(next) => setE({ ...e, photos: next, photo: next[0] ?? '' })} />
             </Field>
           </>
         )}
@@ -1001,5 +1019,56 @@ export function EquipmentWizard() {
         </div>
       </section>
     </>
+  );
+}
+
+/** Upload, remove or reorder the photos of a listing from its detail page. */
+function PhotosModal({ eq, onClose }: { eq: Equipment; onClose: () => void }) {
+  const { update } = useStore();
+  const [photos, setPhotos] = useState<string[]>(photosOf(eq));
+  const [err, setErr] = useState('');
+  const save = () => {
+    if (!photos.length) {
+      setErr('Keep at least one photo. Contractors need to see the machine.');
+      return;
+    }
+    update(
+      (s) => {
+        const x = s.equipment.find((q) => q.id === eq.id);
+        if (x) {
+          x.photos = photos;
+          x.photo = photos[0];
+        }
+      },
+      { history: `Updated photos for ${eq.name} (${photos.length} photo${photos.length === 1 ? '' : 's'})`, toast: 'Photos saved' },
+    );
+    onClose();
+  };
+  return (
+    <Modal
+      title="Equipment photos"
+      sub={`${eq.name} · the main photo shows first in search and on your storefront.`}
+      onClose={onClose}
+      wide
+      footer={
+        <>
+          <button className="btn btn-secondary" onClick={onClose}>
+            Cancel
+          </button>
+          <button className="btn btn-primary" onClick={save}>
+            Save photos
+          </button>
+        </>
+      }
+    >
+      <PhotoManager
+        photos={photos}
+        error={err}
+        onChange={(next) => {
+          setPhotos(next);
+          setErr('');
+        }}
+      />
+    </Modal>
   );
 }

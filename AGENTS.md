@@ -33,6 +33,7 @@ src/
   store/store.tsx            app state + auth in sessionStorage, update() with history/notification/toast, resetDemo()
   components/Layout.tsx      sidebar, header (search, notifications, profile menu), footer, help, welcome tour
   components/ui.tsx          Modal, ConfirmDialog, ReasonDialog (reason required), Badge, Tabs, Pills, Toggle, Field, Empty, Stars, SecurityCodeDialog
+  components/PhotoManager.tsx  equipment photo upload (drag and drop, Upload photos button, main photo, remove, validation)
   components/charts.tsx      LineChart, MiniLine, Donut, Bars, RouteMap (live route with moving truck)
   pages/Auth.tsx             sign in, security code, locked, supplier sign-up (8 steps)
   pages/Dashboard.tsx        live dashboard
@@ -70,8 +71,8 @@ src/
 | `#/` | Dashboard | Live delivery (tabs, progress, map), alerts (expired/expiring documents, extensions, extra charges, quotes, failed payouts), booking details (switch booking), fleet utilization, bookings trend (7/30 days), earnings (month switch), booking status, rental days booked, quote requests, add equipment |
 | `#/storefront` | Storefront | Live preview; edit about, areas, hours, delivery/pickup, policies; business name/phone/email changes wait for a RigSetGo check (demo approve) |
 | `#/equipment` | Equipment list | Filter by status and category, search, add equipment |
-| `#/equipment/:id` | Equipment detail | Change status (Published, Unavailable, Maintenance, Retired with reason), publish checks, delete draft, units (add, edit, remove unless booked, open unit calendar), pricing, documents (upload/replace), bookings; "bookings paused" banner when a document is expired |
-| `#/equipment/new`, `#/equipment/:id/edit` | Add / edit wizard | Basics + photo → details → units → price + booking mode → documents for the category → listing checks → save as draft or publish |
+| `#/equipment/:id` | Equipment detail | Photo gallery with thumbnails and **Upload photos** (add, remove, set main photo; at least one photo required), change status (Published, Unavailable, Maintenance, Retired with reason), publish checks, delete draft, units (add, edit, remove unless booked, open unit calendar), pricing, documents (upload/replace), bookings; "bookings paused" banner when a document is expired |
+| `#/equipment/new`, `#/equipment/:id/edit` | Add / edit wizard | Basics + **Upload photos** (drag and drop or button; JPG/PNG/WebP, 10 MB each, up to 10; main photo, make main, remove; wrong type/size errors; sample photos for the demo) → details → units → price + booking mode → documents for the category → listing checks → save as draft or publish |
 | `#/pricing` | Pricing | Daily, weekly, 4-week, min days, hours, overtime, delivery fee, deposit, weekends, instant booking; validation; saved in history; recent price changes |
 | `#/calendar` | Calendar | Per equipment + unit month view; bookings, maintenance, outside rentals; block dates (cannot block booked or already-blocked days); remove block; click a booking to open it |
 | `#/quotes`, `#/quotes/:id` | Quote requests | Tabs; unit availability check; send itemized quote with valid-until date; decline with reason; change or withdraw quote; demo "contractor accepts and pays" creates a confirmed booking and a delivery job |
